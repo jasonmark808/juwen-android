@@ -4,11 +4,10 @@ appId: cc.juwen.reader.e2e
     clearState: true
     permissions:
       all: allow
-- setOrientation: PORTRAIT
+- setOrientation: portrait
 - assertVisible: "国产AI芯片发布新进展"
 - tapOn: "国产AI芯片发布新进展"
 - assertVisible: "查看原文"
 - assertVisible: "返回"
 - tapOn: "返回"
 - assertVisible: "搜索新闻或来源"
-

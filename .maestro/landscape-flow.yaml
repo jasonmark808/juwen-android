@@ -4,7 +4,7 @@ appId: cc.juwen.reader.e2e
     clearState: true
     permissions:
       all: allow
-- setOrientation: LANDSCAPE
+- setOrientation: landscape_left
 - assertVisible: "国产AI芯片发布新进展"
 - assertVisible: "今日简报"
 - tapOn: "国产AI芯片发布新进展"
