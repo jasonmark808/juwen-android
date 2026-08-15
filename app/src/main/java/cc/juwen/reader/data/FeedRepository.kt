@@ -22,6 +22,7 @@ class FeedRepository(private val context: Context) {
     }.getOrNull()
 
     fun refresh(): Result<FeedSnapshot> = runCatching {
+        if (BuildConfig.E2E_FIXTURE) return@runCatching requireNotNull(loadCached())
         val configured = preferences.getString("feed_url", null)?.trim().orEmpty()
         val primary = configured.ifBlank { BuildConfig.DEFAULT_FEED_URL }
         val candidates = listOf(primary, cdnFallback(primary)).distinct()
