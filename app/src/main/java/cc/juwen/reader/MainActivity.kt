@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.compose.BackHandler
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
@@ -217,6 +218,10 @@ internal fun NewsScreen(
         (destination != Destination.Favorites || it.id in favorites) &&
             (category == "全部" || it.category == category) &&
             (query.isBlank() || it.title.contains(query, ignoreCase = true) || it.sources.any { source -> source.name.contains(query, true) })
+    }
+
+    BackHandler(enabled = !twoPane && selectedStory != null) {
+        onStoryClose()
     }
 
     if (!twoPane && selectedStory != null) {
