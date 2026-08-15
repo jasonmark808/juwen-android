@@ -6,7 +6,7 @@ appId: cc.juwen.reader.e2e
       all: allow
 - setOrientation: landscape_left
 - assertVisible: "国产AI芯片发布新进展"
-- assertVisible: "今日简报"
+- assertVisible: "今日焦点"
 - tapOn: "国产AI芯片发布新进展"
 - assertVisible: "查看原文"
 - assertVisible: "相关来源"
