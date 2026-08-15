@@ -81,7 +81,7 @@ jobs:
         if: failure()
         run: |
           mkdir -p build/maestro
-          adb logcat -d > build/maestro/logcat-failure.txt || true
+          timeout 10s adb logcat -d > build/maestro/logcat-failure.txt || true
 
       - name: Upload test diagnostics
         if: always()
