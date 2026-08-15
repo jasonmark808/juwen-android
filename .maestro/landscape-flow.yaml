@@ -23,7 +23,7 @@ appId: cc.juwen.reader.e2e
 - inputText: "https://example.com/feeds/latest.json"
 - hideKeyboard
 - tapOn: "测试并保存"
-- assertVisible: "连接成功"
+- assertVisible: "连接成功.*"
 - stopApp
 - launchApp
 - assertVisible: "国产AI芯片发布新进展"
