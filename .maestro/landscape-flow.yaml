@@ -1,0 +1,28 @@
+appId: cc.juwen.reader.e2e
+---
+- launchApp:
+    clearState: true
+    permissions:
+      all: allow
+- setOrientation: LANDSCAPE
+- assertVisible: "国产AI芯片发布新进展"
+- assertVisible: "今日简报"
+- tapOn: "国产AI芯片发布新进展"
+- assertVisible: "查看原文"
+- assertVisible: "相关来源"
+- tapOn:
+    text: "收藏"
+    index: 1
+- tapOn:
+    text: "收藏"
+    index: 0
+- assertVisible: "国产AI芯片发布新进展"
+- tapOn: "设置"
+- tapOn: "GitHub Pages feed URL"
+- eraseText
+- inputText: "https://example.com/feeds/latest.json"
+- tapOn: "测试并保存"
+- assertVisible: "连接成功"
+- stopApp
+- launchApp
+- assertVisible: "国产AI芯片发布新进展"

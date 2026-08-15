@@ -1,0 +1,19 @@
+{
+  "baidu": {
+    "items": [
+      {"title": "国产AI芯片发布新进展", "url": "https://www.baidu.com/s?wd=ai-chip", "rank": 1},
+      {"title": "多地公布新一轮消费政策", "url": "https://www.baidu.com/s?wd=policy", "rank": 4}
+    ]
+  },
+  "weibo": {
+    "data": [
+      {"title": "国产AI芯片发布新进展", "url": "https://weibo.com/topic/ai-chip", "rank": 2},
+      {"title": "新能源汽车月度数据更新", "url": "https://weibo.com/topic/cars", "rank": 5},
+      {"title": "无效链接", "url": "http://example.com/insecure", "rank": 1}
+    ]
+  },
+  "cls-hot": [
+    {"title": "全球市场隔夜重要动态", "url": "https://www.cls.cn/detail/1", "rank": 3}
+  ]
+}
+

@@ -1,0 +1,95 @@
+name: Android UI tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "app/**"
+      - ".maestro/**"
+      - ".github/workflows/android-ui-tests.yml"
+      - "*.gradle.kts"
+      - "gradle/**"
+  push:
+    branches: [main, master]
+    paths:
+      - "app/**"
+      - ".maestro/**"
+      - ".github/workflows/android-ui-tests.yml"
+      - "*.gradle.kts"
+      - "gradle/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-ui-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ui-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MAESTRO_VERSION: "2.8.0"
+      MAESTRO_SHA256: "b3e561161904fb391875ca5834d5b22cf0b01c052dd1b408ad83e30d8f8951b3"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Set up Java 17
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@48b5f213c81028ace310571dc5ec0fbbca0b2947
+        with:
+          gradle-version: "8.10.2"
+
+      - name: Verify screenshots and build E2E APK
+        run: gradle verifyPaparazziDebug assembleE2e
+
+      - name: Install Maestro
+        run: |
+          curl --fail --location --retry 3 --output maestro.zip "https://github.com/mobile-dev-inc/Maestro/releases/download/cli-${MAESTRO_VERSION}/maestro.zip"
+          echo "${MAESTRO_SHA256}  maestro.zip" | sha256sum --check --strict
+          unzip -q maestro.zip -d "$RUNNER_TEMP/maestro"
+          echo "$RUNNER_TEMP/maestro/maestro/bin" >> "$GITHUB_PATH"
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Run Maestro on Android 35 tablet
+        uses: ReactiveCircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: Nexus 10
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          disable-animations: true
+          script: |
+            mkdir -p build/maestro
+            adb install -r app/build/outputs/apk/e2e/app-e2e.apk
+            maestro test .maestro --format junit --output build/maestro/results.xml --debug-output build/maestro/debug
+            adb logcat -d > build/maestro/logcat.txt
+
+      - name: Capture logcat after failure
+        if: failure()
+        run: |
+          mkdir -p build/maestro
+          adb logcat -d > build/maestro/logcat-failure.txt || true
+
+      - name: Upload test diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: android-ui-test-diagnostics
+          path: |
+            build/maestro
+            app/build/reports/paparazzi
+          if-no-files-found: warn
+          retention-days: 7

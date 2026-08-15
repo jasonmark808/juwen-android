@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-15T08:00:00Z",
+  "mode": "rules",
+  "stories": [
+    {
+      "id": "e2e-ai-chip",
+      "title": "国产AI芯片发布新进展",
+      "category": "科技",
+      "published_at": "2026-08-15T07:45:00Z",
+      "collected_at": "2026-08-15T08:00:00Z",
+      "score": 48.0,
+      "important": true,
+      "summary": "来自两个来源的规则化热点样本。",
+      "sources": [{"name": "百度热搜", "url": "https://www.baidu.com/s?wd=ai-chip", "rank": 1}, {"name": "微博", "url": "https://weibo.com/topic/ai-chip", "rank": 2}]
+    },
+    {
+      "id": "e2e-policy",
+      "title": "多地公布新一轮消费政策",
+      "category": "时政",
+      "published_at": "2026-08-15T07:20:00Z",
+      "collected_at": "2026-08-15T08:00:00Z",
+      "score": 26.5,
+      "important": false,
+      "summary": null,
+      "sources": [{"name": "百度热搜", "url": "https://www.baidu.com/s?wd=policy", "rank": 4}]
+    },
+    {
+      "id": "e2e-cars",
+      "title": "新能源汽车月度数据更新",
+      "category": "汽车",
+      "published_at": "2026-08-15T06:58:00Z",
+      "collected_at": "2026-08-15T08:00:00Z",
+      "score": 25.1,
+      "important": false,
+      "summary": null,
+      "sources": [{"name": "微博", "url": "https://weibo.com/topic/cars", "rank": 5}]
+    }
+  ]
+}
