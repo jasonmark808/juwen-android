@@ -1,0 +1,12 @@
+.gradle/
+.kotlin/
+.idea/
+local.properties
+**/build/
+*.apk
+*.aab
+*.idsig
+*.pyc
+__pycache__/
+.superpowers/
+work/
